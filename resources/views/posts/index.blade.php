@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Custom Title
+        ALL Posts
         </x-slot>
 
         <div class="text-center">
@@ -30,8 +30,15 @@
                             <td class="px-4 py-2 whitespace-nowrap text-gray-700">{{$post['created_at']}}</td>
                             <td class="px-4 py-2 whitespace-nowrap text-gray-700 space-x-2">
                                 <a href="{{ route('posts.show', $post['id']) }}" class="inline-block px-4 py-1 text-xs font-medium text-white bg-blue-400 rounded hover:bg-blue-500">View</a>
-                                <a href="#" class="inline-block px-4 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700">Edit</a>
-                                <a href="#" class="inline-block px-4 py-1 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700">Delete</a>
+                                <a href="{{ route('posts.edit', $post['id']) }}" class="inline-block px-4 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700">Edit</a>
+                                <form method="POST" action="{{ route('posts.destroy', $post['id']) }}" class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-button color="danger" type="submit" onclick="return confirm('Delete {{$post['title']}}?')">
+                                        Delete
+                                    </x-button>
+                                </form>
+
                             </td>
                         </tr>
                         @endforeach
